@@ -1,2 +1,2 @@
-require '../lib/list_controller'
+require './lib/list_controller'
 run ListController
