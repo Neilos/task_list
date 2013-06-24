@@ -5,7 +5,7 @@ gem 'sinatra-flash'
 
 group :development do
   gem 'shotgun'
-  gem 'mocha', require => false
+  gem "mocha", "~> 0.14.0"
   gem 'rack-test'
   gem 'minitest'
 end
