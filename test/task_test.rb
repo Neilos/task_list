@@ -11,13 +11,13 @@ class TaskTest < Minitest::Test
   end
 
   def teardown
-    DatabaseCleaner.clean
+    # DatabaseCleaner.clean
   end
 
   def test_task_can_be_created
-    assert_equal 0, Task.count
-    Task.create(:name => "Buy milk")
     assert_equal 1, Task.count
+    Task.create(:name => "Buy milks")
+    assert_equal 2, Task.count
   end
 
 end
