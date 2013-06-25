@@ -1,5 +1,6 @@
 require 'minitest'
 require 'minitest/autorun'
+require 'mocha/setup'
 require 'rack/test'
 require_relative '../lib/list_controller'
 
@@ -9,6 +10,7 @@ include Rack::Test::Methods
   def app
     ListController.new
   end
+
 
   def test_has_a_root_controller_which_returns_the_main_page
     get '/'

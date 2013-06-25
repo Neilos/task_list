@@ -1,7 +1,11 @@
 
 require 'sinatra/base'
+require 'mongoid'
+require_relative './list_helpers'
+require_relative './task'
 
 class ListController < Sinatra::Base
+include ListHelpers
 
   configure do
     set :root, Proc.new { File.join(File.dirname(__FILE__), "../") }
@@ -14,17 +18,19 @@ class ListController < Sinatra::Base
 
 # session = {
 #   :task_count => ? ,
+#   :list_order  => [:-2, :-1]
 #   :tasks      => {
-#                   {:id          => ?,
-#                   :description  => ?,
-#                   :due          => ?,
-#                   :complete     =>?}
+#                   :-1 => {:task_no      => ?,
+#                            :description  => ?,
+#                            :due          => ?,
+#                            :complete     => ?
+#                            }
 #                   ,
-#                   {:id          => ?,
-#                   :description  => ?,
-#                   :due          => ?,
-#                   :complete     =>?}
-#                   }
+#                   :-2 => {:task_no     => ?,
+#                           :description  => ?,
+#                           :due          => ?,
+#                           :complete     =>?}
+#                           }
 #           }
 # To access the task count in the session:
 #   session[:task_count]
@@ -32,9 +38,10 @@ class ListController < Sinatra::Base
 #   session[:tasks]
 # To access a particular task in the session:
 #   use the find_task(:id)
+# To access the tasks in the saved list_order:
+# =>  session[:list_order].map {|task_id| session[task_id]}
+  
 
-  # def find_task(id)
-  # end
 
   get '/' do
     erb :main
