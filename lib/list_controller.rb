@@ -1,10 +1,10 @@
 
 require 'sinatra/base'
 
-class ListController
+class ListController < Sinatra::Base
 
-configure do
-  set :root, Proc.new { File.join(File.dirname(__FILE__), "../") }
-end
+  configure do
+    set :root, Proc.new { File.join(File.dirname(__FILE__), "../") }
+  end
 
 end
