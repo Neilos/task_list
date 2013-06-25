@@ -24,7 +24,6 @@ $(function() {
       "Create Task": function() {
         $( "#sortable").append( "<li class=\"ui-state-default\"><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>" + description.val() + " " + due.val() + "<button type=\"button\">Edit</button></li>");
         $("#description").val("");
-        // $("#due").val()
         $( this ).dialog( "close" );
       },
       Cancel: function() {
@@ -37,6 +36,7 @@ $(function() {
   $( "#create-task" )
     .button()
     .click(function() {
+      $("#due").datepicker('setDate', new Date());
       $( "#dialog-form" ).dialog( "open" );
   });
 });
