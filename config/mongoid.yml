@@ -1,0 +1,13 @@
+development:
+  sessions:
+    default:
+      database: task_list_development
+      hosts:
+        - localhost:27017
+
+test:
+  sessions:
+    default:
+      database: task_list_test
+      hosts:
+        - localhost:27017
