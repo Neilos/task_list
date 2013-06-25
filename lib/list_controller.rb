@@ -8,8 +8,18 @@ class ListController < Sinatra::Base
   end
 
   get '/' do
-    
     erb :main
   end
 
+  post '/delete_task' do
+    # fill this in later
+  end
+
+  post '/update_task' do
+    # fill this in later
+  end
+
+  post '/create_task' do
+    # fill this in later
+  end
 end
