@@ -59,7 +59,11 @@ Mongoid.load! ('./config/mongoid.yml')
   end
 
   post '/update_task' do
-    # fill this in later
+    Task.find(params[:id]).update_attributes(:task_no => params[:task_no],
+                :description => params[:description],
+                :due => params[:due],
+                :completed => params[:completed]
+                )
   end
 
 end
