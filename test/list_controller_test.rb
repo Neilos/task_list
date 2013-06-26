@@ -27,13 +27,10 @@ include Rack::Test::Methods
     post '/create_task'
     assert last_response.ok?
   end
-<<<<<<< Updated upstream
-=======
 
   def test_can_update_task
     post '/update_task'
     assert last_response.ok?
     assert_equal 1, Task.count
   end
->>>>>>> Stashed changes
 end
