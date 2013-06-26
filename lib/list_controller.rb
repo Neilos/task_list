@@ -48,7 +48,7 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   get '/' do
     erb :main
   end
-
+  
   post '/create_task' do
     Task.create(:task_no => params[:task_no],
                 :description => params[:description],
