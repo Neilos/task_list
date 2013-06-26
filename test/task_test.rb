@@ -16,7 +16,10 @@ class TaskTest < Minitest::Test
 
   def test_task_can_be_created
     assert_equal 0, Task.count
-    Task.create(:name => "Buy milk")
+    Task.create(:task_no => 1, 
+                :description => "Buy milk", 
+                :due => DateTime.new(2001,2,3),
+                :completed => false )
     assert_equal 1, Task.count
   end
 
