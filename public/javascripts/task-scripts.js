@@ -20,6 +20,13 @@ function get_task_data_from_form() {
   return data;
 }
 
+function clear_task_data_from_form() {
+    task_no: $('#task_no').val('');
+    description: $('#description').val('');
+    due: $('#due').val('');
+    completed: $('#completed').prop('checked', false);
+}
+
 function send_task_data() {
   // TODO remove newly created task from view if response from server was a failure
   $.post("/create_task", get_task_data_from_form()).done(
@@ -52,11 +59,11 @@ $(document).ready(function() {
         add_task_to_view(description.val(), due.val());
         send_task_data();
         $( this ).dialog( "close" );
-        // TODO needs to clear the form
+        clear_task_data_from_form();
       },
       Cancel: function() {
         $( this ).dialog( "close" );
-        // TODO needs to clear the form
+        clear_task_data_from_form();
       }
     }
   });
