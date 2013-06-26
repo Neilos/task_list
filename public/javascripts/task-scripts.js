@@ -1,17 +1,16 @@
+$(document).ready(function() {
+  
 // Sortable script
-  $(function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
-  });
+  $( "#sortable" ).sortable();
+  $( "#sortable" ).disableSelection();
 
 // Datepicker script
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
+  $( ".datepicker" ).datepicker();
+// });
 
 
 // Create task modal
-$(function() {
+// $(document).ready(function() {
   var description = $( "#description" ),
     due = $( "#due" );
 
@@ -39,4 +38,5 @@ $(function() {
       $("#due").datepicker('setDate', new Date());
       $( "#dialog-form" ).dialog( "open" );
   });
+
 });
