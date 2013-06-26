@@ -21,10 +21,9 @@ function get_task_data_from_form() {
 }
 
 function send_task_data() {
+  // TODO remove newly created task from view if response from server was a failure
   $.post("/create_task", get_task_data_from_form()).done(
-    function(data){ 
-      alert("it's finished sending the data and we got a response back")
-    }
+    function(data){}
   )
 }
 
