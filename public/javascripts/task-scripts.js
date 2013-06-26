@@ -43,4 +43,29 @@ $(document).ready(function() {
       $( "#dialog-form" ).dialog( "open" );
   });
 
+      $( "#update-form" ).dialog({
+    autoOpen: false,
+    height: 400,
+    width: 800,
+    modal: true,
+    buttons: {
+      "Update Task": function() {
+        add_task_to_view(description.val(), due.val());
+        send_task_data();
+        $( this ).dialog( "close" );
+      },
+      Cancel: function() {
+        $( this ).dialog( "close" );
+      }
+    }
+  });
+
+// Create task button for modal
+  $( "#update-task" )
+    .button()
+    .click(function() {
+      $( "#update-form" ).dialog( "open" );
+  });
+
+
 });
