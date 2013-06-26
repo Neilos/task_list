@@ -23,10 +23,14 @@ $(document).ready(function() {
     width: 800,
     modal: true,
     buttons: {
-      "Create Task": function() {
-        add_task_to_view(description.val(), due.val());
-        $("#description").val("");
-        $( this ).dialog( "close" );
+      "Create Task": {
+        id: "create-task",
+        text: "Create Task",
+        click: function() {
+            add_task_to_view(description.val(), due.val());
+            $("#description").val("");
+            $( this ).dialog( "close" );
+          }
       },
       Cancel: function() {
         $( this ).dialog( "close" );
