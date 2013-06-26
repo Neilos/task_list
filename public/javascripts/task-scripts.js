@@ -53,6 +53,7 @@ $(document).ready(function() {
         add_task_to_view(description.val(), due.val());
         send_task_data();
         $( this ).dialog( "close" );
+        // TODO needs to clear the form
       },
       Cancel: function() {
         $( this ).dialog( "close" );
