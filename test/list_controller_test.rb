@@ -34,6 +34,7 @@ include Rack::Test::Methods
   def test_can_update_task
     post '/update_task'
     assert last_response.ok?
+    assert_equal 1, Task.count
   end
 
   def test_can_create_tasks
@@ -42,5 +43,4 @@ include Rack::Test::Methods
     assert last_response.ok?
     assert_equal 1, Task.count
   end
-
 end
