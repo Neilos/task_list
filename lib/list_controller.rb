@@ -7,6 +7,8 @@ require_relative './task'
 class ListController < Sinatra::Base
 include ListHelpers
 
+Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
+
   configure do
     set :root, Proc.new { File.join(File.dirname(__FILE__), "../") }
 
@@ -48,8 +50,11 @@ include ListHelpers
   end
 
   post '/create_task' do
-    # fill this in later
-
+    Task.create(:task_no => params[:task_no],
+                :description => params[:description],
+                :due => params[:due],
+                :completed => params[:completed]
+                )
   end
 
   post '/delete_task' do
@@ -59,6 +64,5 @@ include ListHelpers
   post '/update_task' do
     # fill this in later
   end
-
 
 end

@@ -1,4 +1,4 @@
 require 'mongoid'
 require 'database_cleaner'
 ENV['RACK_ENV'] = 'test'
-Mongoid.load! './config/mongoid.yml'
+Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')

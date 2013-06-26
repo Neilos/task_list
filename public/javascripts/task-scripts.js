@@ -1,17 +1,19 @@
+$(document).ready(function() {
+  
+  function add_task_to_view(description, due){
+    $( "#sortable").append( "<li class=\"ui-state-default\"><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>" + description+ " " + due + "<button type=\"button\">Edit</button></li>");
+  }
+
 // Sortable script
-  $(function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
-  });
+  $( "#sortable" ).sortable();
+  $( "#sortable" ).disableSelection();
 
 // Datepicker script
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-
+  $( ".datepicker" ).datepicker();
+// });
 
 // Create task modal
-$(function() {
+// $(document).ready(function() {
   var description = $( "#description" ),
     due = $( "#due" );
 
@@ -22,12 +24,13 @@ $(function() {
     modal: true,
     buttons: {
       "Create Task": function() {
-        $( "#sortable").append( "<li class=\"ui-state-default\"><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>" + description.val() + " " + due.val() + "<button type=\"button\">Edit</button></li>");
+        add_task_to_view(description.val(), due.val());
         $("#description").val("");
         $( this ).dialog( "close" );
       },
       Cancel: function() {
         $( this ).dialog( "close" );
+        // TODO needs to clear the form
       }
     }
   });
@@ -39,4 +42,5 @@ $(function() {
       $("#due").datepicker('setDate', new Date());
       $( "#dialog-form" ).dialog( "open" );
   });
+
 });
