@@ -50,11 +50,13 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   end
 
   post '/create_task' do
+
     Task.create(:task_no => params[:task_no],
                 :description => params[:description],
-                :due => params[:due],
+                :due => DateTime.parse(params[:due]),
                 :completed => params[:completed]
                 )
+  "SUCCESS"
   end
 
   post '/delete_task' do

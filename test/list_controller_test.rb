@@ -38,7 +38,7 @@ include Rack::Test::Methods
 
   def test_can_create_tasks
     assert_equal 0, Task.count
-    post '/create_task'
+    post '/create_task', :due => '2013-02-25'
     assert last_response.ok?
     assert_equal 1, Task.count
   end
