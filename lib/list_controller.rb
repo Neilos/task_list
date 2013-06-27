@@ -1,6 +1,7 @@
 
 require 'sinatra/base'
 require 'mongoid'
+require 'moped'
 require_relative './list_helpers'
 require_relative './task'
 
@@ -18,50 +19,36 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
                                :secret => 'Charlotte Neil Tim James B Team'
   end
 
-# session = {
-#   :task_count => ? ,
-#   :list_order  => [:-2, :-1]
-#   :tasks      => {
-#                   :-1 => {:task_no      => ?,
-#                            :description  => ?,
-#                            :due          => ?,
-#                            :complete     => ?
-#                            }
-#                   ,
-#                   :-2 => {:task_no     => ?,
-#                           :description  => ?,
-#                           :due          => ?,
-#                           :complete     =>?}
-#                           }
-#           }
-# To access the task count in the session:
-#   session[:task_count]
-# To access all tasks in the session:
-#   session[:tasks]
-# To access a particular task in the session:
-#   use the find_task(:id)
-# To access the tasks in the saved list_order:
-# =>  session[:list_order].map {|task_id| session[task_id]}
-  
-
 
   get '/' do
+    @tasks = find_all_tasks
     erb :main
   end
+
   
   post '/create_task' do
 
-    Task.create(:task_no => params[:task_no],
+    new_task = Task.create!(:task_no => params[:task_no],
                 :description => params[:description],
                 :due => DateTime.parse(params[:due]),
                 :completed => params[:completed]
                 )
-  "SUCCESS"
+
+    { :task_id => new_task.id,  
+      :task_no => new_task.task_no, 
+      :description => new_task.description, 
+      :due => new_task.due, 
+      :completed => new_task.completed
+    }.to_json
   end
 
+
   post '/delete_task' do
-    # fill this in later
+    task_to_delete = Task.find_by(id: params[:id])
+    puts task_to_delete.inspect
+    task_to_delete.destroy
   end
+
 
   post '/update_task' do
   #   Task.find(params[:id]).update_attributes(:task_no => params[:task_no],
@@ -70,5 +57,6 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   #               :completed => params[:completed]
   #               )
   end
+
 
 end

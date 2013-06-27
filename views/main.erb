@@ -3,9 +3,20 @@
   </div>
   
   <div id="maincontent">
-
     <ul id="sortable" class='to-do-items'>
 
+      <li id="template_task" class="hidden">
+        <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+        <button type="button" id="update-task">Edit</button>
+      </li>
+
+      <% @tasks.each do |task| %>
+        <li id="template_task">
+          <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+          <button type="button" id="update-task">Edit</button>
+          <%= task.description %>
+      </li>
+      <% end %>
     </ul>
   
   </div>

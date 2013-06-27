@@ -1,8 +1,9 @@
 function add_task_to_view(data){
+  var json_data = jQuery.parseJSON(data)
   var new_task = $('#template_task').clone()
-  new_task.attr('id', "new")
+  new_task.attr('id', json_data.task_id)
   new_task.attr('class', "ui-state-default")
-  $( new_task ).append(' ' + task_display_value(data))
+  $( new_task ).append(' ' + task_display_value(json_data))
   new_task.appendTo("#sortable")
 }
 
@@ -11,17 +12,18 @@ function edit_task_in_view(data){
   $( parent_task ).text(' ' + task_display_value(data))
 }
 
-function task_display_value(data){
-  return data.description + " | " + data.due + " | Completed? " + data.completed }
+function task_display_value(json_data){
+  return json_data.description + " | " + json_data.due + " | Completed? " + json_data.completed
+ }
 
 function get_task_data_from_form() {
-  var data = {
+  var form_data = {
     task_no: $('#task_no').val(),
     description: $('#description').val(),
     due: $('#due').val(),
     completed: $('#completed').is(':checked')
   }
-  return data;
+  return form_data;
 }
 
 function clear_task_data_from_form() {
@@ -32,10 +34,9 @@ function clear_task_data_from_form() {
 }
 
 function send_task_data() {
-  // TODO remove newly created task from view if response from server was a failure
-  var data = get_task_data_from_form()
-  $.post("/create_task", data)
-    .done(function() { add_task_to_view(data); })
+  var data_to_be_posted = get_task_data_from_form()
+  $.post("/create_task", data_to_be_posted)
+    .done(function(data) { add_task_to_view(data); })
     .fail(function() { alert("Error: Task not added"); })
 }
 
