@@ -48,7 +48,6 @@ function remove_task_from_view(data) {
   $( existing_task ).remove();
 }
 
-
 function get_task_id_of_html_task(id_of_task_to_be_deleted) {
   return { id: id_of_task_to_be_deleted }
 }
@@ -58,6 +57,25 @@ function delete_task(id_of_task_to_be_deleted) {
     .done(function(data) { remove_task_from_view(data); })
     .fail(function() { alert("Error: Task not deleted"); })
 }
+
+// UPDATE TASK FUNCTIONS
+
+// function edit_task_in_view(data){
+//   var parent_task = $("#update-task").parent()
+//   $( parent_task ).text(' ' + task_display_value(data))
+// }
+
+// function task_display_value(json_data){
+//   return json_data.description + " | " + json_data.due + " | Completed? " + json_data.completed
+//  }
+
+// function send_update_task_data() {
+//   // TODO remove newly created task from view if response from server was a failure
+//   var data = get_task_data_from_form()
+//   $.post("/update_task", data)
+//     .done(function() { edit_task_in_view(data); })
+//     .fail(function() { alert("Error: Task not updated"); })
+// }
 
 // JAVASCRIPT EXECUTION
 
@@ -101,7 +119,7 @@ $(document).ready(function() {
     }
   });
 
-
+// Delete task click handler
 $("#maincontent").on('click', '.delete_task_button', function() {
   delete_task( $(this).parent().attr('id') );
 });
@@ -113,6 +131,7 @@ $("#maincontent").on('click', '.delete_task_button', function() {
       $( "#update_form" ).dialog( "open" );
   });
 
+// Update task click handler and dialog handler
   $( "#update_form" ).dialog({
     autoOpen: false,
     height: 400,
@@ -120,8 +139,7 @@ $("#maincontent").on('click', '.delete_task_button', function() {
     modal: true,
     buttons: {
       "Update Task": function() {
-        add_task_to_view(description.val(), due.val());
-        send_task_data();
+        send_update_task_data();
         $( this ).dialog( "close" );
       },
       Cancel: function() {

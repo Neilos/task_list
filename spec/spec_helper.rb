@@ -18,7 +18,7 @@ module IntegrationTestHelper
     fill_in "Due", :with => due
     page.check('completed') if completed
     click_button "Create Task"
-    within(".to-do-items") do     
+    within("#sortable") do     
       page.should have_content(description)
     end
   end

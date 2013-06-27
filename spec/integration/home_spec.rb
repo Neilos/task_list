@@ -21,7 +21,7 @@ describe 'home page', :type => :feature, :js => true do
     fill_in "Description", :with => "Buy honey"
     page.check('completed')
     click_button "Create Task"
-    within(".to-do-items") do     
+    within("#sortable") do     
       page.should have_content('Buy honey')
     end
   end
@@ -32,7 +32,7 @@ describe 'home page', :type => :feature, :js => true do
     create_new_task(2, "get job", "23-05-2013")
     create_new_task(3, "write a book", "26-08-2013", false)
     visit '/'
-    within(".to-do-items") do     
+    within("#sortable") do     
       page.should have_content("buy milk")
       page.should have_content("get job")
       page.should have_content("write a book")
@@ -48,7 +48,7 @@ describe 'home page', :type => :feature, :js => true do
         click_button "Edit"
         fill_in "Description", :with => "Buy cheese"
         click_button "Update Task"
-        within(".to-do-items") do     
+        within("#sortable") do     
           page.should have_content('Buy cheese')
         end
       end
@@ -61,7 +61,7 @@ describe 'home page', :type => :feature, :js => true do
         create_new_task(1, "buy milk", "15-05-2013", true)
         create_new_task(2, "get job", "23-05-2013")
         first(:button, 'Delete').click
-        within(".to-do-items") do     
+        within("#sortable") do     
           page.should_not have_content("buy milk")
         end
       end
