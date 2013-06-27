@@ -47,6 +47,7 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
     task_to_delete = Task.find_by(id: params[:id])
     puts task_to_delete.inspect
     task_to_delete.destroy
+    { :task_id => task_to_delete.id }.to_json
   end
 
 

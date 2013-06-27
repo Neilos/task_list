@@ -1,19 +1,21 @@
   <div id="navbar">
-    <button type="button" id="create-task">New Task</button>
+    <button type="button" id="create_task">New Task</button>
   </div>
   
   <div id="maincontent">
-    <ul id="sortable" class='to-do-items'>
+    <ul id="sortable" class='to_do_items'>
 
       <li id="template_task" class="hidden">
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-        <button type="button" id="update-task">Edit</button>
+        <button type="button" class="update_task">Edit</button>
+        <button type="button" class="delete_task_button">Delete</button>
       </li>
 
       <% @tasks.each do |task| %>
-        <li id="template_task">
+        <li id=<%= "#{task.id}" %> >
           <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-          <button type="button" id="update-task">Edit</button>
+          <button type="button" class="update_task">Edit</button>
+          <button type="button" class="delete_task_button">Delete</button>
           <%= task.description %>
       </li>
       <% end %>
@@ -21,7 +23,7 @@
   
   </div>
   
-  <div id="dialog-form" title="New task">
+  <div id="dialog_form" title="New task">
     
     <p class="validateTips">All task fields must be filled.</p>
     
@@ -43,7 +45,7 @@
   </div>
 
 
-  <div id="update-form" title="Update task">
+  <div id="update_form" title="Update task">
     
     <p class="validateTips">All task fields must be filled.</p>
     
