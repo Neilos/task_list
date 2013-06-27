@@ -64,11 +64,11 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   end
 
   post '/update_task' do
-    Task.find(params[:id]).update_attributes(:task_no => params[:task_no],
-                :description => params[:description],
-                :due => params[:due],
-                :completed => params[:completed]
-                )
+  #   Task.find(params[:id]).update_attributes(:task_no => params[:task_no],
+  #               :description => params[:description],
+  #               :due => params[:due],
+  #               :completed => params[:completed]
+  #               )
   end
 
 end

@@ -6,9 +6,13 @@ function add_task_to_view(data){
   new_task.appendTo("#sortable")
 }
 
-function task_display_value(data){
-  return data.description + " | " + data.due + " | Completed? " + data.completed
+function edit_task_in_view(data){
+  var parent_task = $("#update-task").parent()
+  $( parent_task ).text(' ' + task_display_value(data))
 }
+
+function task_display_value(data){
+  return data.description + " | " + data.due + " | Completed? " + data.completed }
 
 function get_task_data_from_form() {
   var data = {
@@ -33,6 +37,14 @@ function send_task_data() {
   $.post("/create_task", data)
     .done(function() { add_task_to_view(data); })
     .fail(function() { alert("Error: Task not added"); })
+}
+
+function send_update_task_data() {
+  // TODO remove newly created task from view if response from server was a failure
+  var data = get_task_data_from_form()
+  $.post("/update_task", data)
+    .done(function() { edit_task_in_view(data); })
+    .fail(function() { alert("Error: Task not updated"); })
 }
 
 $(document).ready(function() {
@@ -75,13 +87,10 @@ $(document).ready(function() {
     }
   });
 
-
 // Create task button for modal
-  $( "#maincontent #update-task" )
-    .button()
-    .click(function() {
-      $( "#update-form" ).dialog( "open" );
-  });
+  $("#maincontent").on('click', "#update-task", function(event) {
+    $( "#update-form" ).dialog( "open" );
+  });  
 
   $( "#update-form" ).dialog({
     autoOpen: false,
@@ -90,8 +99,7 @@ $(document).ready(function() {
     modal: true,
     buttons: {
       "Update Task": function() {
-        add_task_to_view(description.val(), due.val());
-        send_task_data();
+        send_update_task_data();
         $( this ).dialog( "close" );
       },
       Cancel: function() {
