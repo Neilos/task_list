@@ -28,11 +28,18 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   
   post '/create_task' do
 
-    Task.create(:task_no => params[:task_no],
+    new_task = Task.create(:task_no => params[:task_no],
                 :description => params[:description],
                 :due => DateTime.parse(params[:due]),
                 :completed => params[:completed]
                 )
+
+    { :task_id => new_task.id,  
+      :task_no => new_task.task_no, 
+      :description => new_task.description, 
+      :due => new_task.due, 
+      :completed => new_task.completed
+    }.to_json
   end
 
 
