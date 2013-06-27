@@ -27,8 +27,20 @@ include Rack::Test::Methods
   end
 
   def test_can_delete_a_task
-    post '/delete_task'
+    assert_equal 0, Task.count
+    task_to_delete = Task.create!(:task_no => 1, 
+                :description => "Buy milk", 
+                :due => DateTime.new(2080,9,8),
+                :completed => false )
+    assert_equal 1, Task.count
+    task_to_keep = Task.create!(:task_no => 2, 
+                :description => "Buy cheese", 
+                :due => DateTime.new(2080,10,8),
+                :completed => false )
+    assert_equal 2, Task.count
+    post '/delete_task', :id => task_to_delete.id
     assert last_response.ok?
+    assert_equal 1, Task.count
   end
 
   def test_can_update_task
@@ -45,7 +57,10 @@ include Rack::Test::Methods
 
   def test_can_create_tasks
     assert_equal 0, Task.count
-    post '/create_task', :due => '2013-02-25'
+    post '/create_task', {:task_no => 1, 
+                :description => "Buy milk", 
+                :due => '2013-02-25',
+                :completed => false}
     assert last_response.ok?
     assert_equal 1, Task.count
   end

@@ -28,7 +28,7 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   
   post '/create_task' do
 
-    new_task = Task.create(:task_no => params[:task_no],
+    new_task = Task.create!(:task_no => params[:task_no],
                 :description => params[:description],
                 :due => DateTime.parse(params[:due]),
                 :completed => params[:completed]
@@ -44,7 +44,9 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
 
 
   post '/delete_task' do
-    # fill this in later
+    task_to_delete = Task.find_by(id: params[:id])
+    puts task_to_delete.inspect
+    task_to_delete.destroy
   end
 
 
