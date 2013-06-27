@@ -12,16 +12,21 @@
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
         <button type="button" id="create-task">Edit</button> Item 1 
       </li>
+
     </ul>
   </div>
   <div id="dialog-form" title="New task">
     <p class="validateTips">All task fields must be filled.</p>
-    <form>
+    <form name="task_edit_create_form">
       <fieldset>
+        <label for="task_no">Task Number</label>
+        <input type="text" name="task_no" id="task_no" class="text ui-widget-content ui-corner-all" />
         <label for="description">Description</label>
         <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all" />
         <label for="due">Due</label>
         <input type="text" id="due" class="datepicker" /> 
+        <label for="completed">Completed?</label>
+        <input type="checkbox" id="completed" unchecked/>
       </fieldset>
     </form>
   </div>
