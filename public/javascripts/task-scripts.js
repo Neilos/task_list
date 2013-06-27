@@ -49,6 +49,14 @@ $(document).ready(function() {
   var description = $( "#description" ),
     due = $( "#due" );
 
+// Create task button for modal
+  $( "#create-task" )
+    .button()
+    .click(function() {
+      $("#due").datepicker('setDate', new Date());
+      $( "#dialog-form" ).dialog( "open" );
+  });
+
   $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 400,
@@ -67,15 +75,15 @@ $(document).ready(function() {
     }
   });
 
+
 // Create task button for modal
-  $( "#create-task" )
+  $( "#maincontent #update-task" )
     .button()
     .click(function() {
-      $("#due").datepicker('setDate', new Date());
-      $( "#dialog-form" ).dialog( "open" );
+      $( "#update-form" ).dialog( "open" );
   });
 
-      $( "#update-form" ).dialog({
+  $( "#update-form" ).dialog({
     autoOpen: false,
     height: 400,
     width: 800,
@@ -92,12 +100,6 @@ $(document).ready(function() {
     }
   });
 
-// Create task button for modal
-  $( "#update-task" )
-    .button()
-    .click(function() {
-      $( "#update-form" ).dialog( "open" );
-  });
 
 
 });

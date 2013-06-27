@@ -1,23 +1,24 @@
   <div id="navbar">
     <button type="button" id="create-task">New Task</button>
   </div>
+  
   <div id="maincontent">
 
     <ul id="sortable" class='to-do-items'>
       <li id="template_task" class="hidden">
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-        <button type="button">Edit</button>
+        <button type="button" id="update-task">Edit</button>
       </li>
-      <li>
-        <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-        <button type="button" id="create-task">Edit</button> Item 1 
-      </li>
-
     </ul>
+  
   </div>
+  
   <div id="dialog-form" title="New task">
+    
     <p class="validateTips">All task fields must be filled.</p>
+    
     <form name="task_edit_create_form">
+    
       <fieldset>
         <label for="task_no">Task Number</label>
         <input type="text" name="task_no" id="task_no" class="text ui-widget-content ui-corner-all" />
@@ -28,13 +29,18 @@
         <label for="completed">Completed?</label>
         <input type="checkbox" id="completed" unchecked/>
       </fieldset>
+    
     </form>
+  
   </div>
 
 
-  <div id="update-form" title="New task">
+  <div id="update-form" title="Update task">
+    
     <p class="validateTips">All task fields must be filled.</p>
+    
     <form name="task_edit_create_form">
+    
       <fieldset>
         <label for="task_no">Task Number</label>
         <input type="text" name="task_no" id="task_no" class="text ui-widget-content ui-corner-all" />
@@ -45,5 +51,7 @@
         <label for="completed">Completed?</label>
         <input type="checkbox" id="completed" unchecked/>
       </fieldset>
+    
     </form>
+ 
   </div>
