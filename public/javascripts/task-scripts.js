@@ -6,6 +6,11 @@ function clear_task_data_from_form() {
     completed: $('#completed').prop('checked', false);
 }
 
+function convert_buttons_to_jquery_buttons(){
+  $( "button" ).button();
+}
+
+
 // CREATE TASK FUNCTIONS
 
 function task_display_value(json_data){
@@ -58,6 +63,7 @@ function delete_task(id_of_task_to_be_deleted) {
     .fail(function() { alert("Error: Task not deleted"); })
 }
 
+
 // UPDATE TASK FUNCTIONS
 
 // function edit_task_in_view(data){
@@ -77,6 +83,7 @@ function delete_task(id_of_task_to_be_deleted) {
 //     .fail(function() { alert("Error: Task not updated"); })
 // }
 
+
 // JAVASCRIPT EXECUTION
 
 $(document).ready(function() {
@@ -90,8 +97,7 @@ $(document).ready(function() {
 // });
 
 // Create task modal
-  var description = $( "#description" ),
-    due = $( "#due" );
+  var description = $( "#description" ), due = $( "#due" );
 
 // Create task button for modal
   $( "#create_task" )
@@ -100,6 +106,17 @@ $(document).ready(function() {
       $("#due").datepicker('setDate', new Date());
       $( "#dialog_form" ).dialog( "open" );
   });
+
+  // Delete task click handler
+  $("#maincontent").on('click', '.delete_task_button', function() {
+    delete_task( $(this).parent().attr('id') );
+  });
+
+  // Edit task click handler
+  $("#maincontent").on('click', '.update_task_button', function() {
+    update_task( $(this).parent().attr('id') );
+  });
+
 
   $( "#dialog_form" ).dialog({
     autoOpen: false,
@@ -119,17 +136,6 @@ $(document).ready(function() {
     }
   });
 
-// Delete task click handler
-$("#maincontent").on('click', '.delete_task_button', function() {
-  delete_task( $(this).parent().attr('id') );
-});
-
-// Create task button for modal
-  $( "#maincontent .update_task" )
-    .button()
-    .click(function() {
-      $( "#update_form" ).dialog( "open" );
-  });
 
 // Update task click handler and dialog handler
   $( "#update_form" ).dialog({
@@ -147,5 +153,9 @@ $("#maincontent").on('click', '.delete_task_button', function() {
       }
     }
   });
+
+  //convert all buttons to jquery buttons
+  // $( "button" ).button();
+  convert_buttons_to_jquery_buttons();
 
 });
