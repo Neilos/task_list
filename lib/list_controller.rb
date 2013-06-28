@@ -52,16 +52,16 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
 
   post '/update_task' do
     task_to_update = Task.find(params[:id])
-    task_to_update.update(:task_no => params[:task_no],
+    task_to_update.update_attributes!(:task_no => params[:task_no],
                 :description => params[:description],
-                :due => DateTime.parse(params[:due]),
+                :due => params[:due],
                 :completed => params[:completed]
                 )
-    { :task_id => edit_task.id,  
-      :task_no => edit_task.task_no, 
-      :description => edit_task.description, 
-      :due => edit_task.due, 
-      :completed => edit_task.completed
+    { :task_id => task_to_update.id,  
+      :task_no => task_to_update.task_no, 
+      :description => task_to_update.description, 
+      :due => task_to_update.due, 
+      :completed => task_to_update.completed
     }.to_json
   end
 

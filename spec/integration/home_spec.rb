@@ -60,7 +60,7 @@ describe 'home page', :type => :feature, :js => true do
         click_button "Edit"
         fill_in "Description", :with => "Buy cheese"
         fill_in "Due", :with => "23-05-2013"
-        page.check('create_completed')
+        page.check('edit_completed')
         click_button "Update Task"
         within("#sortable") do     
           page.should have_content("Buy cheese")

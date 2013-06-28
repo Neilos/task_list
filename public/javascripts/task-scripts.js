@@ -10,11 +10,13 @@ function convert_buttons_to_jquery_buttons(){
   $( "button" ).button();
 }
 
-
+function get_task_id_of_html_task(id_of_task) {
+  return { id: id_of_task }
+}
 // CREATE TASK FUNCTIONS
 
 function task_display_value(json_data){
-  return json_data.description // + " | " + json_data.due + " | Completed? " + json_data.completed
+  return json_data.description 
 }
 
 function add_task_to_page(json_data){
@@ -22,7 +24,10 @@ function add_task_to_page(json_data){
   var new_task = $('#template_task').clone()
   new_task.attr('id', data.task_id)
   new_task.attr('class', "ui-state-default")
-  $( new_task ).append(' ' + task_display_value(data))
+  $( new_task ).children("#task_no").text(data.task_no)
+  $( new_task ).children("#description").text(data.description)
+  $( new_task ).children("#due").text(data.due)
+  $( new_task ).children("#completed").text(data.completed)
   new_task.appendTo("#sortable")
 }
 
@@ -53,12 +58,9 @@ function remove_task_from_view(json_data) {
   $( existing_task ).remove();
 }
 
-function get_task_id_of_html_task(id_of_task_to_be_deleted) {
-  return { id: id_of_task_to_be_deleted }
-}
 
-function delete_task(id_of_task_to_be_deleted) {
-  $.post("/delete_task", get_task_id_of_html_task(id_of_task_to_be_deleted) )
+function delete_task(id_of_task) {
+  $.post("/delete_task", get_task_id_of_html_task(id_of_task) )
     .done(function(data) { remove_task_from_view(data); })
     .fail(function() { alert("Error: Task not deleted"); })
 }
@@ -70,14 +72,15 @@ function amend_task_on_page(json_data){
   var data = jQuery.parseJSON(json_data) // {task_id: "4654654546545gfdgdf"}
   var task_id = data.task_id  //"4654654546545gfdgdf"
   var task_to_be_amended = $( '#' + task_id )
-  
-  // TODO finish by amending text of task
-  
-  alert( "need to amend task " + task_to_be_amended)
+  $( task_to_be_amended ).children("#task_no").text(data.task_no)
+  $( task_to_be_amended ).children("#description").text(data.description)
+  $( task_to_be_amended ).children("#due").text(data.due)
+  $( task_to_be_amended ).children("#completed").text(data.completed)
 }
 
-function get_updated_task_data_from_form() {
+function get_updated_task_data_from_form(id_of_task) {
   var form_data = {
+    id: id_of_task,
     task_no: $('#edit_task_no').val(),
     description: $('#edit_description').val(),
     due: $('#edit_due').val(),
@@ -94,8 +97,8 @@ function populate_form_with_task_data(data) {
   $('#edit_completed').prop('checked', data.completed);
 }
 
-function send_updated_task_data() {
-  var data_to_be_posted = get_updated_task_data_from_form()
+function send_updated_task_data(id_of_task) {
+  var data_to_be_posted = get_updated_task_data_from_form(id_of_task)
   $.post("/update_task", data_to_be_posted)
     .done(function(data) { amend_task_on_page(data); })
     .fail(function() { alert("Error: Task not updated"); })
@@ -131,7 +134,18 @@ $(document).ready(function() {
 
   // Edit task click handler
   $("#maincontent").on('click', '.edit_task_button', function() {
-    $( "#edit_task_div" ).dialog( "open" );
+    var id_of_task = $(this).parent().attr('id');
+    var edit_task_no = $(this).parent().children('#task_no').text();
+    var edit_description = $(this).parent().children('#description').text();
+    var edit_due = $(this).parent().children('#due').text();
+    var edit_completed = $(this).parent().children('#completed').text();
+
+    get_updated_task_data_from_form(id_of_task)
+    $( "#edit_task_no" ).val(edit_task_no)
+    $( "#edit_description" ).val(edit_description)
+    $( "#edit_due" ).datepicker('setDate', edit_due);
+    $( "#edit_completed" ).val(edit_completed)
+    $( "#edit_task_div" ).data('id_of_task', id_of_task).dialog( "open" );
   });
 
   $( "#create_task_div" ).dialog({
@@ -154,7 +168,8 @@ $(document).ready(function() {
     autoOpen: false, height: 400, width: 800, modal: true,
     buttons: {
       "Update Task": function() {
-        send_updated_task_data();
+        var id_of_task = $(this).data('id_of_task');
+        send_updated_task_data(id_of_task);
         $( this ).dialog( "close" );
       },
       Cancel: function() {

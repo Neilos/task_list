@@ -6,11 +6,14 @@
 
 <div id="maincontent">
   <ul id="sortable" class='to_do_items'>
-
     <li id="template_task" class="hidden">
       <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
       <button type="button" class="edit_task_button">Edit</button>
       <button type="button" class="delete_task_button" role="button">Delete</button>
+      <span id="task_no"></span>
+      <span id="description"></span>
+      <span id="due"></span>
+      <span id="completed"></span>
     </li>
 
     <% @tasks.each do |task| %>
@@ -18,7 +21,10 @@
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
         <button type="button" class="edit_task_button">Edit</button>
         <button type="button" class="delete_task_button" role="button">Delete</button>
-        <%= task.description %>
+        <span id="task_no"><%= task.task_no %></span>
+        <span id="description"><%= task.description %></span>
+        <span id="due"><%= task.due %></span>
+        <span id="completed"><%= task.completed %></span>
     </li>
     <% end %>
   </ul>
