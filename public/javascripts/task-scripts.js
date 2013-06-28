@@ -28,16 +28,29 @@ function add_task_to_page(json_data){
   var data = jQuery.parseJSON(json_data)
   var new_task = $('#template_task').clone()
   new_task.attr('id', data.task_id)
+  new_task.attr('data-list-position', data.list_position)
   new_task.attr('class', "ui-state-default")
   $( new_task ).append(' ' + task_display_value(data))
   new_task.appendTo("#sortable")
 }
 
-function update_task_positions() {
-  alert("updating task position");
-  $.post("/update_task_positions", {"51cd739ea54d75b975000001": "6", "51cd73b4a54d753ba7000001": "5", "51cd958aa54d75e289000001": "4"})
-    .done(function(data) { alert("success") })
-    .fail(function() { alert("failure"); })
+function update_and_return_data_list_position_attributes(){
+  var json = '{ '
+  $( "#sortable li" ).each(function( index ) {
+    if ($(this).attr('id') != "template_task"){
+      $(this).attr( "data-list-position", index );
+      json += '\"' + $(this).attr('id') + '\": \"' + index + '\", '
+    }
+  });
+  json = json.replace(/, $/, ' }');
+  var data = jQuery.parseJSON(json);
+  return data;
+}
+
+function send_updated_task_positions(data) {
+  $.post("/update_task_positions", data)
+    .done(function(data) {  })
+    .fail(function() {  })
 }
 
 function get_task_data_from_form() {
@@ -45,7 +58,8 @@ function get_task_data_from_form() {
     task_no: $('#create_task_no').val(),
     description: $('#create_description').val(),
     due: $('#create_due').val(),
-    completed: $('#create_completed').is(':checked')
+    completed: $('#create_completed').is(':checked'),
+    list_position: "1000000"
   }
   return form_data;
 }
@@ -121,7 +135,18 @@ function send_updated_task_data() {
 $(document).ready(function() {
 
   // Sortable script
-  $( "#sortable" ).sortable();
+  $( "#sortable" ).sortable({
+    start: function(evt, ui) {},
+    stop: function(evt, ui) {
+      // user drags the tasks into new positions
+      // javascript is triggered and executes the following
+      var data = update_and_return_data_list_position_attributes(); // update the data-list-position attributes in the html to the new positions
+      // create the data hash of task ids and new positions and then execute
+      send_updated_task_positions(data)
+    }
+  });
+
+
   $( "#sortable" ).disableSelection();
 
   // Datepicker script

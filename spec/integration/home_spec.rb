@@ -56,9 +56,9 @@ describe 'home page', :type => :feature, :js => true do
     page.execute_script(java_script1)
     java_script2 = %Q|swapNodes(document.getElementById("#{task1.id}"), document.getElementById("#{task2.id}"));|
     page.execute_script(java_script2)
-    page.body.index("get job").should < page.body.index("buy milk")
+    page.body.index("get job").should be < page.body.index("buy milk")
     visit '/'
-    page.body.index("get job").should < page.body.index("buy milk")
+    page.body.index("get job").should be < page.body.index("buy milk")
   end
 
   describe "a task on the page" do
