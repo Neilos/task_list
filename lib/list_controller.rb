@@ -20,21 +20,44 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   end
 
 
+
+  # class Object
+  #   attr_accessor :name
+  #   def initialize
+  #     @name = "john"
+  #   end
+  # end
+
+  # object = Object.new
+  # puts object.name
+
   get '/' do
     @tasks = find_all_tasks
+    @tasks.sort!{|task_x, task_y| task_x.list_position <=> task_y.list_position }
     erb :main
   end
 
-  
+  post '/update_task_positions' do
+    # e.g. params = { "21345431311213" => "3" , "2134534351313" => "4" }
+    params_hash = params
+    params_hash.each do |id, position|
+      task = Task.find(id.to_s)
+      task.update_attributes!(list_position: position)
+    end
+  end
+
   post '/create_task' do
 
-    new_task = Task.create!(:task_no => params[:task_no],
+    new_task = Task.create!(
+                :list_position => params[:list_position],
+                :task_no => params[:task_no],
                 :description => params[:description],
                 :due => DateTime.parse(params[:due]),
                 :completed => params[:completed]
                 )
 
     { :task_id => new_task.id,  
+      :list_position => new_task.list_position,
       :task_no => new_task.task_no, 
       :description => new_task.description, 
       :due => new_task.due, 
@@ -45,6 +68,7 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
 
   post '/delete_task' do
     task_to_delete = Task.find(params[:id])
+
     task_to_delete.destroy
     { :task_id => task_to_delete.id }.to_json
   end

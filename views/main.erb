@@ -1,4 +1,8 @@
 <div>
+  <button type ="button" id="update_task_pos" onclick="update_task_positions();">update postions</button>
+</div>
+
+<div>
   <button type="button" id="create_task">New Task</button>
 </div>
 
@@ -6,7 +10,8 @@
 
 <div id="maincontent">
   <ul id="sortable" class='to_do_items'>
-    <li id="template_task" class="hidden">
+
+    <li id="template_task" class="hidden" data-list-position="0">
       <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
       <button type="button" class="edit_task_button">Edit</button>
       <button type="button" class="delete_task_button" role="button">Delete</button>
@@ -17,7 +22,7 @@
     </li>
 
     <% @tasks.each do |task| %>
-      <li id=<%= "#{task.id}" %> >
+      <li id=<%="#{task.id}"%> <%=task.list_position ? "data-list-position='#{task.list_position}'": "data-list-position='' " %>  >
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
         <button type="button" class="edit_task_button">Edit</button>
         <button type="button" class="delete_task_button" role="button">Delete</button>

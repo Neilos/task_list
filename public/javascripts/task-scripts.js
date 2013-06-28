@@ -1,4 +1,11 @@
 
+function swapNodes(a, b) {
+    var aparent = a.parentNode;
+    var asibling = a.nextSibling === b ? a : a.nextSibling;
+    b.parentNode.insertBefore(a, b);
+    aparent.insertBefore(b, asibling);
+}
+
 function clear_task_data_from_form() {
     task_no: $('#task_no').val('');
     description: $('#description').val('');
@@ -29,6 +36,13 @@ function add_task_to_page(json_data){
   $( new_task ).children("#due").text(data.due)
   $( new_task ).children("#completed").text(data.completed)
   new_task.appendTo("#sortable")
+}
+
+function update_task_positions() {
+  alert("updating task position");
+  $.post("/update_task_positions", {"51cd739ea54d75b975000001": "6", "51cd73b4a54d753ba7000001": "5", "51cd958aa54d75e289000001": "4"})
+    .done(function(data) { alert("success") })
+    .fail(function() { alert("failure"); })
 }
 
 function get_task_data_from_form() {
