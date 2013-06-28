@@ -21,9 +21,22 @@ include Rack::Test::Methods
   end
 
   def test_has_a_root_controller_which_returns_the_main_page
+    task1 = Task.create!(
+                :list_position => 3,
+                :task_no => 3, 
+                :description => "get job", 
+                :due => DateTime.new(2080,10,8),
+                :completed => false )
+    task2 = Task.create!(
+                :list_position => 2,
+                :task_no => 2, 
+                :description => "Buy cheese", 
+                :due => DateTime.new(2080,10,8),
+                :completed => false )
     get '/'
     assert last_response.ok?
     assert_includes last_response.body, 'Task List'
+    assert_operator last_response.body.index("Buy cheese"), :<, last_response.body.index("get job")
   end
 
   def test_can_delete_a_task
@@ -61,8 +74,6 @@ include Rack::Test::Methods
                 :due => DateTime.new(2080,10,8),
                 :completed => false )
     params_hash = { task1.id => "3" , task2.id => "4" }
-    # puts "task1.id: #{task1.id}"
-    # puts "task2.id: #{task2.id}"
     post '/update_task_positions', params_hash
     assert last_response.ok?
     task1.reload

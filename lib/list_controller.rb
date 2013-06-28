@@ -20,8 +20,20 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
   end
 
 
+
+  # class Object
+  #   attr_accessor :name
+  #   def initialize
+  #     @name = "john"
+  #   end
+  # end
+
+  # object = Object.new
+  # puts object.name
+
   get '/' do
     @tasks = find_all_tasks
+    @tasks.sort!{|task_x, task_y| task_x.list_position <=> task_y.list_position }
     erb :main
   end
 

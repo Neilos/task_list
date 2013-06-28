@@ -35,7 +35,7 @@ function add_task_to_page(json_data){
 
 function update_task_positions() {
   alert("updating task position");
-  $.post("/update_task_positions", {"1": "1", "3": "2", "2": "3"})
+  $.post("/update_task_positions", {"51cd739ea54d75b975000001": "6", "51cd73b4a54d753ba7000001": "5", "51cd958aa54d75e289000001": "4"})
     .done(function(data) { alert("success") })
     .fail(function() { alert("failure"); })
 }
