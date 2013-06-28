@@ -1,74 +1,63 @@
-  <div id="navbar">
-    <button type="button" id="create_task">New Task</button>
-  </div>
-  
-  <div id="maincontent">
-    <ul id="sortable" class='to_do_items'>
+<div>
+  <button type="button" id="create_task">New Task</button>
+</div>
 
-      <li id="template_task" class="hidden">
+<div id="maincontent">
+  <ul id="sortable" class='to_do_items'>
+
+    <li id="template_task" class="hidden">
+      <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+      <button type="button" class="edit_task_button">Edit</button>
+      <button type="button" class="delete_task_button" role="button">Delete</button>
+    </li>
+
+    <% @tasks.each do |task| %>
+      <li id=<%= "#{task.id}" %> >
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-        <button type="button" class="update_task">Edit</button>
+        <button type="button" class="edit_task_button">Edit</button>
         <button type="button" class="delete_task_button" role="button">Delete</button>
-      </li>
+        <%= task.description %>
+    </li>
+    <% end %>
+  </ul>
 
-      <% @tasks.each do |task| %>
-        <li id=<%= "#{task.id}" %> >
-          <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-          <button type="button" class="update_task">Edit</button>
-          <button type="button" class="delete_task_button" role="button">Delete</button>
-          <%= task.description %>
-      </li>
-      <% end %>
-    </ul>
+</div>
+
+<div id="create_task_div" title="Create task">
   
-  </div>
+  <form name="task_edit_create_form">
   
-  <div id="dialog_form" title="New task">
-    
-    <p class="validateTips">All task fields must be filled.</p>
-    
-    <form name="task_edit_create_form">
-    
-      <fieldset>
-        <label for="task_no">Task Number</label>
-        <input type="text" name="task_no" id="task_no" class="text ui-widget-content ui-corner-all" />
-        <label for="description">Description</label>
-        <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all" />
-        <label for="due">Due</label>
-        <input type="text" id="due" class="datepicker" /> 
-        <label for="completed">Completed?</label>
-        <input type="checkbox" id="completed" unchecked/>
-      </fieldset>
-    
-    </form>
+    <fieldset>
+      <label for="task_no">Task Number</label>
+      <input type="text" name="task_no" id="create_task_no" class="text ui-widget-content ui-corner-all" />
+      <label for="description">Description</label>
+      <input type="text" name="description" id="create_description" class="text ui-widget-content ui-corner-all" />
+      <label for="due">Due</label>
+      <input type="text" id="create_due" class="datepicker" /> 
+      <label for="completed">Completed?</label>
+      <input type="checkbox" id="create_completed" unchecked/>
+    </fieldset>
   
-  </div>
+  </form>
+
+</div>
 
 
-  <div id="update_form" title="Update task">
-    
-    <p class="validateTips">All task fields must be filled.</p>
-    
-    <form name="task_edit_form">
-    
-      <fieldset>
-        <label for="task_no">Task Number</label>
-        <input type="text" name="task_no" id="task_no" class="text ui-widget-content ui-corner-all" />
-        <label for="description">Description</label>
-        <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all" />
-        <label for="due">Due</label>
-        <input type="text" id="due" class="datepicker" /> 
-        <label for="completed">Completed?</label>
-        <input type="checkbox" id="completed" unchecked/>
-      </fieldset>
-    
-    </form>
- 
-  </div>
+<div id="edit_task_div" title="Edit task">
+  
+  <form name="task_edit_form">
+  
+    <fieldset>
+      <label for="task_no">Task Number</label>
+      <input type="text" name="task_no" id="edit_task_no" class="text ui-widget-content ui-corner-all" />
+      <label for="description">Description</label>
+      <input type="text" name="description" id="edit_description" class="text ui-widget-content ui-corner-all" />
+      <label for="due">Due</label>
+      <input type="text" id="edit_due" class="datepicker" />
+      <label for="completed">Completed?</label>
+      <input type="checkbox" id="edit_completed" unchecked/>
+    </fieldset>
+  
+  </form>
 
-  <div>
-          <li id="template_task" class="hidden">
-       <!--  <span class="ui-icon ui-icon-arrowthick-2-n-s"></span> -->
-        <button type="button" id="update-task">Edit</button>
-      </li>
-  </div>
+</div>

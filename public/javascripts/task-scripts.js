@@ -14,41 +14,41 @@ function convert_buttons_to_jquery_buttons(){
 // CREATE TASK FUNCTIONS
 
 function task_display_value(json_data){
-  return json_data.description + " | " + json_data.due + " | Completed? " + json_data.completed
+  return json_data.description // + " | " + json_data.due + " | Completed? " + json_data.completed
 }
 
-function add_task_to_view(data){
-  var json_data = jQuery.parseJSON(data)
+function add_task_to_page(json_data){
+  var data = jQuery.parseJSON(json_data)
   var new_task = $('#template_task').clone()
-  new_task.attr('id', json_data.task_id)
+  new_task.attr('id', data.task_id)
   new_task.attr('class', "ui-state-default")
-  $( new_task ).append(' ' + task_display_value(json_data))
+  $( new_task ).append(' ' + task_display_value(data))
   new_task.appendTo("#sortable")
 }
 
 function get_task_data_from_form() {
   var form_data = {
-    task_no: $('#task_no').val(),
-    description: $('#description').val(),
-    due: $('#due').val(),
-    completed: $('#completed').is(':checked')
+    task_no: $('#create_task_no').val(),
+    description: $('#create_description').val(),
+    due: $('#create_due').val(),
+    completed: $('#create_completed').is(':checked')
   }
   return form_data;
 }
 
-function send_task_data() {
+function send_new_task_data() {
   var data_to_be_posted = get_task_data_from_form()
   $.post("/create_task", data_to_be_posted)
-    .done(function(data) { add_task_to_view(data); })
+    .done(function(data) { add_task_to_page(data); })
     .fail(function() { alert("Error: Task not added"); })
 }
 
 
 // DELETE TASK FUNCTIONS
 
-function remove_task_from_view(data) {
-  var json_data = jQuery.parseJSON(data) // {task_id: "4654654546545gfdgdf"}
-  var task_id = json_data.task_id  //"4654654546545gfdgdf"
+function remove_task_from_view(json_data) {
+  var data = jQuery.parseJSON(json_data) // {task_id: "4654654546545gfdgdf"}
+  var task_id = data.task_id  //"4654654546545gfdgdf"
   var existing_task = $( '#' + task_id )
   $( existing_task ).remove();
 }
@@ -66,45 +66,62 @@ function delete_task(id_of_task_to_be_deleted) {
 
 // UPDATE TASK FUNCTIONS
 
-// function edit_task_in_view(data){
-//   var parent_task = $("#update-task").parent()
-//   $( parent_task ).text(' ' + task_display_value(data))
-// }
+function amend_task_on_page(json_data){
+  var data = jQuery.parseJSON(json_data) // {task_id: "4654654546545gfdgdf"}
+  var task_id = data.task_id  //"4654654546545gfdgdf"
+  var task_to_be_amended = $( '#' + task_id )
+  
+  // TODO finish by amending text of task
+  
+  alert( "need to amend task " + task_to_be_amended)
+}
 
-// function task_display_value(json_data){
-//   return json_data.description + " | " + json_data.due + " | Completed? " + json_data.completed
-//  }
+function get_updated_task_data_from_form() {
+  var form_data = {
+    task_no: $('#tedit_task_no').val(),
+    description: $('#edit_description').val(),
+    due: $('#edit_due').val(),
+    completed: $('#edit_completed').is(':checked')
+  }
+  return form_data;
+}
 
-// function send_update_task_data() {
-//   // TODO remove newly created task from view if response from server was a failure
-//   var data = get_task_data_from_form()
-//   $.post("/update_task", data)
-//     .done(function() { edit_task_in_view(data); })
-//     .fail(function() { alert("Error: Task not updated"); })
-// }
+function populate_form_with_task_data(data) {
+  var data = jQuery.parseJSON(json_data)
+  $('#edit_task_no').val(data.task_no)
+  $('#edit_description').val(data.description)
+  $('#edit_due').val(data.due)
+  $('#edit_completed').prop('checked', data.completed);
+}
+
+function send_updated_task_data() {
+  var data_to_be_posted = get_updated_task_data_from_form()
+  $.post("/create_task", data_to_be_posted)
+    .done(function(data) { amend_task_on_page(data); })
+    .fail(function() { alert("Error: Task not added"); })
+}
 
 
 // JAVASCRIPT EXECUTION
 
 $(document).ready(function() {
 
-// Sortable script
+  // Sortable script
   $( "#sortable" ).sortable();
   $( "#sortable" ).disableSelection();
 
-// Datepicker script
+  // Datepicker script
   $( ".datepicker" ).datepicker({ dateFormat: "dd-mm-yy" });
-// });
 
-// Create task modal
+  // Create task modal
   var description = $( "#description" ), due = $( "#due" );
 
-// Create task button for modal
+  // Create task button for modal
   $( "#create_task" )
     .button()
     .click(function() {
       $("#due").datepicker('setDate', new Date());
-      $( "#dialog_form" ).dialog( "open" );
+      $( "#create_task_div" ).dialog( "open" );
   });
 
   // Delete task click handler
@@ -113,19 +130,15 @@ $(document).ready(function() {
   });
 
   // Edit task click handler
-  $("#maincontent").on('click', '.update_task_button', function() {
-    update_task( $(this).parent().attr('id') );
+  $("#maincontent").on('click', '.edit_task_button', function() {
+    $( "#edit_task_div" ).dialog( "open" );
   });
 
-
-  $( "#dialog_form" ).dialog({
-    autoOpen: false,
-    height: 400,
-    width: 800,
-    modal: true,
+  $( "#create_task_div" ).dialog({
+    autoOpen: false, height: 400, width: 800, modal: true,
     buttons: {
       "Create Task": function() {
-        send_task_data();
+        send_new_task_data();
         $( this ).dialog( "close" );
         clear_task_data_from_form();
       },
@@ -136,16 +149,12 @@ $(document).ready(function() {
     }
   });
 
-
-// Update task click handler and dialog handler
-  $( "#update_form" ).dialog({
-    autoOpen: false,
-    height: 400,
-    width: 800,
-    modal: true,
+  // Update task click handler and dialog handler
+  $( "#edit_task_div" ).dialog({
+    autoOpen: false, height: 400, width: 800, modal: true,
     buttons: {
       "Update Task": function() {
-        send_update_task_data();
+        send_updated_task_data();
         $( this ).dialog( "close" );
       },
       Cancel: function() {
@@ -154,8 +163,6 @@ $(document).ready(function() {
     }
   });
 
-  //convert all buttons to jquery buttons
-  // $( "button" ).button();
   convert_buttons_to_jquery_buttons();
 
 });
