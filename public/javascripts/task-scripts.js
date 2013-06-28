@@ -1,4 +1,11 @@
 
+function swapNodes(a, b) {
+    var aparent = a.parentNode;
+    var asibling = a.nextSibling === b ? a : a.nextSibling;
+    b.parentNode.insertBefore(a, b);
+    aparent.insertBefore(b, asibling);
+}
+
 function clear_task_data_from_form() {
     task_no: $('#task_no').val('');
     description: $('#description').val('');
