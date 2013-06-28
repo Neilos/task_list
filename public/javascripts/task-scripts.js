@@ -120,7 +120,7 @@ $(document).ready(function() {
   $( "#create_task" )
     .button()
     .click(function() {
-      $("#due").datepicker('setDate', new Date());
+      $("#create_due").datepicker('setDate', new Date());
       $( "#create_task_div" ).dialog( "open" );
   });
 
