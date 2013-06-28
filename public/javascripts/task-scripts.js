@@ -33,6 +33,13 @@ function add_task_to_page(json_data){
   new_task.appendTo("#sortable")
 }
 
+function update_task_positions() {
+  alert("updating task position");
+  $.post("/update_task_positions", {"1": "1", "3": "2", "2": "3"})
+    .done(function(data) { alert("success") })
+    .fail(function() { alert("failure"); })
+}
+
 function get_task_data_from_form() {
   var form_data = {
     task_no: $('#create_task_no').val(),
