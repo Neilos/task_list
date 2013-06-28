@@ -137,7 +137,10 @@ $(document).ready(function() {
   $( "#create_task" )
     .button()
     .click(function() {
+      $( "#create_task_no" ).val('')
+      $( "#create_description" ).val('')
       $("#create_due").datepicker('setDate', new Date());
+      $( "#create_completed" ).val('')
       $( "#create_task_div" ).dialog( "open" );
   });
 
