@@ -78,7 +78,7 @@ function amend_task_on_page(json_data){
 
 function get_updated_task_data_from_form() {
   var form_data = {
-    task_no: $('#tedit_task_no').val(),
+    task_no: $('#edit_task_no').val(),
     description: $('#edit_description').val(),
     due: $('#edit_due').val(),
     completed: $('#edit_completed').is(':checked')
@@ -96,9 +96,9 @@ function populate_form_with_task_data(data) {
 
 function send_updated_task_data() {
   var data_to_be_posted = get_updated_task_data_from_form()
-  $.post("/create_task", data_to_be_posted)
+  $.post("/update_task", data_to_be_posted)
     .done(function(data) { amend_task_on_page(data); })
-    .fail(function() { alert("Error: Task not added"); })
+    .fail(function() { alert("Error: Task not updated"); })
 }
 
 

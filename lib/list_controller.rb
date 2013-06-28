@@ -44,19 +44,25 @@ Mongoid.load! File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml')
 
 
   post '/delete_task' do
-    task_to_delete = Task.find_by(id: params[:id])
-    puts task_to_delete.inspect
+    task_to_delete = Task.find(params[:id])
     task_to_delete.destroy
     { :task_id => task_to_delete.id }.to_json
   end
 
 
   post '/update_task' do
-  #   Task.find(params[:id]).update_attributes(:task_no => params[:task_no],
-  #               :description => params[:description],
-  #               :due => params[:due],
-  #               :completed => params[:completed]
-  #               )
+    task_to_update = Task.find(params[:id])
+    task_to_update.update(:task_no => params[:task_no],
+                :description => params[:description],
+                :due => DateTime.parse(params[:due]),
+                :completed => params[:completed]
+                )
+    { :task_id => edit_task.id,  
+      :task_no => edit_task.task_no, 
+      :description => edit_task.description, 
+      :due => edit_task.due, 
+      :completed => edit_task.completed
+    }.to_json
   end
 
 
