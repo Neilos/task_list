@@ -12,10 +12,10 @@
       <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
       <button type="button" class="edit_task_button">Edit</button>
       <button type="button" class="delete_task_button" role="button">Delete</button>
-      <span id="task_no"></span>
-      <span id="description"></span>
-      <span id="due"></span>
-      <span id="completed"></span>
+      <span class="task_no"></span>
+      <span class="description"></span>
+      <span class="due"></span>
+      <span class="completed"></span>
     </li>
 
     <% @tasks.each do |task| %>
@@ -23,10 +23,10 @@
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
         <button type="button" class="edit_task_button">Edit</button>
         <button type="button" class="delete_task_button" role="button">Delete</button>
-        <span id="task_no"><%= task.task_no %></span>
-        <span id="description"><%= task.description %></span>
-        <span id="due"><%= task.due %></span>
-        <span id="completed"><%= task.completed %></span>
+        <span class="task_no"><%= task.task_no %></span>
+        <span class="description"><%= task.description %></span>
+        <span class="due"><%= task.due %></span>
+        <span class="completed"><%= task.completed %></span>
     </li>
     <% end %>
   </ul>
@@ -45,7 +45,7 @@
       <label for="create_due">Due</label>
       <input type="text" id="create_due" class="datepicker" /> 
       <label for="create_completed">Completed?</label>
-      <input type="checkbox" id="create_completed" unchecked/>
+      <input type="checkbox" id="create_completed"/>
     </fieldset>
   
   </form>
@@ -65,7 +65,7 @@
       <label for="edit_due">Due</label>
       <input type="text" id="edit_due" class="datepicker" />
       <label for="edit_completed">Completed?</label>
-      <input type="checkbox" id="edit_completed" unchecked/>
+      <input type="checkbox" id="edit_completed"/>
     </fieldset>
   
   </form>

@@ -2,13 +2,13 @@ require 'minitest'
 require 'minitest/autorun'
 require 'mocha/setup'
 require 'rack/test'
-require_relative '../lib/list_helpers'
-require_relative '../lib/task'
 require 'mongoid'
 require 'database_cleaner'
 
 ENV['RACK_ENV'] = 'test'
 
+require_relative '../lib/list_helpers'
+require_relative '../lib/task'
 
 class ListHelpersTest < Minitest::Test
 include ListHelpers

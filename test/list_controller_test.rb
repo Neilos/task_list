@@ -2,11 +2,11 @@ require 'minitest'
 require 'minitest/autorun'
 require 'mocha/setup'
 require 'rack/test'
-require_relative '../lib/list_controller'
 require 'mongoid'
 require 'database_cleaner'
-
 ENV['RACK_ENV'] = 'test'
+
+require_relative '../lib/list_controller'
 
 class ListControllerTest < Minitest::Test
 include Rack::Test::Methods

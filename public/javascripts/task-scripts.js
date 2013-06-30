@@ -34,10 +34,10 @@ function add_task_to_page(json_data){
   new_task.attr('id', data.task_id)
   new_task.attr('data-list-position', data.list_position)
   new_task.attr('class', "ui-state-default")
-  $( new_task ).children("#task_no").text(data.task_no)
-  $( new_task ).children("#description").text(data.description)
-  $( new_task ).children("#due").text(data.due)
-  $( new_task ).children("#completed").text(data.completed)
+  $( new_task ).children(".task_no").text(data.task_no)
+  $( new_task ).children(".description").text(data.description)
+  $( new_task ).children(".due").text(data.due)
+  $( new_task ).children(".completed").text(data.completed)
   new_task.appendTo("#sortable")
 }
 
@@ -102,10 +102,10 @@ function amend_task_on_page(json_data){
   var data = jQuery.parseJSON(json_data) // {task_id: "4654654546545gfdgdf"}
   var task_id = data.task_id  //"4654654546545gfdgdf"
   var task_to_be_amended = $( '#' + task_id )
-  $( task_to_be_amended ).children("#task_no").text(data.task_no)
-  $( task_to_be_amended ).children("#description").text(data.description)
-  $( task_to_be_amended ).children("#due").text(data.due)
-  $( task_to_be_amended ).children("#completed").text(data.completed)
+  $( task_to_be_amended ).children(".task_no").text(data.task_no)
+  $( task_to_be_amended ).children(".description").text(data.description)
+  $( task_to_be_amended ).children(".due").text(data.due)
+  $( task_to_be_amended ).children(".completed").text(data.completed)
 }
 
 function get_updated_task_data_from_form(id_of_task) {
@@ -119,7 +119,7 @@ function get_updated_task_data_from_form(id_of_task) {
   return form_data;
 }
 
-function populate_form_with_task_data(data) {
+function populate_form_with_task_data(json_data) {
   var data = jQuery.parseJSON(json_data)
   $('#edit_task_no').val(data.task_no)
   $('#edit_description').val(data.description)
@@ -143,14 +143,10 @@ $(document).ready(function() {
   $( "#sortable" ).sortable({
     start: function(evt, ui) {},
     stop: function(evt, ui) {
-      // user drags the tasks into new positions
-      // javascript is triggered and executes the following
-      var data = update_and_return_data_list_position_attributes(); // update the data-list-position attributes in the html to the new positions
-      // create the data hash of task ids and new positions and then execute
+      var data = update_and_return_data_list_position_attributes();
       send_updated_task_positions(data)
     }
   });
-
 
   $( "#sortable" ).disableSelection();
 
@@ -179,17 +175,17 @@ $(document).ready(function() {
   // Edit task click handler
   $("#maincontent").on('click', '.edit_task_button', function() {
     var id_of_task = $(this).parent().attr('id');
-    var edit_task_no = $(this).parent().children('#task_no').text();
-    var edit_description = $(this).parent().children('#description').text();
-    var edit_due = $(this).parent().children('#due').text();
-    var edit_completed = $(this).parent().children('#completed').text();
-
-    get_updated_task_data_from_form(id_of_task)
-    $( "#edit_task_no" ).val(edit_task_no)
-    $( "#edit_description" ).val(edit_description)
-    $( "#edit_due" ).datepicker('setDate', edit_due);
-    $( "#edit_completed" ).val(edit_completed)
+    var task_no = $(this).parent().children('.task_no').text();
+    var description = $(this).parent().children('.description').text();
+    var due = $(this).parent().children('.due').text();
+    var completed = $(this).parent().children('.completed').text() === 'true';
     $( "#edit_task_div" ).data('id_of_task', id_of_task).dialog( "open" );
+    // get_updated_task_data_from_form(id_of_task)
+    $( "#edit_task_no" ).val(task_no)
+    $( "#edit_description" ).val(description)
+    $( "#edit_due" ).datepicker('setDate', due);
+    $( "#edit_completed" ).prop("checked", completed);
+    
   });
 
   $( "#create_task_div" ).dialog({
