@@ -20,6 +20,8 @@ function convert_buttons_to_jquery_buttons(){
 function get_task_id_of_html_task(id_of_task) {
   return { id: id_of_task }
 }
+
+
 // CREATE TASK FUNCTIONS
 
 function task_display_value(json_data){

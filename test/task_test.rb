@@ -1,8 +1,11 @@
 require 'minitest'
 require 'minitest/autorun'
 require 'rack/test'
-require_relative './test_helper'
 require_relative '../lib/task'
+require 'mongoid'
+require 'database_cleaner'
+
+ENV['RACK_ENV'] = 'test'
 
 class TaskTest < Minitest::Test
 
